@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import productService from "../services/productService";
+import { productSchema } from "../schemas/productSchema";
 
 const getAll = async (req: Request, res: Response) => {
   try {
@@ -21,6 +22,13 @@ const getById = async (req: Request, res: Response) => {
 };
 
 const create = async (req: Request, res: Response) => {
+  const validation = productSchema.safeParse(req.body);
+
+  if (!validation.success) {
+    return res.status(400).json({ errors: validation.error.format() });
+  }
+
+  const { name, price } = validation.data;
   try {
     const { name, price } = req.body;
     const newProduct = await productService.create(name, price);
