@@ -4,7 +4,7 @@ const findAll = async () => {
   return await prisma.product.findMany();
 };
 
-const findById = async (id: string) => {
+const findById = async (id: number) => {
   return await prisma.product.findUnique({
     where: { id },
   });
@@ -16,14 +16,14 @@ const create = async (data: { name: string; price: number }) => {
   });
 };
 
-const update = async (id: string, data: { name?: string; price?: number }) => {
+const update = async (id: number, data: { name?: string; price?: number }) => {
   return await prisma.product.update({
     where: { id },
     data,
   });
 };
 
-const remove = async (id: string) => {
+const remove = async (id: number) => {
   return await prisma.product.delete({
     where: { id },
   });

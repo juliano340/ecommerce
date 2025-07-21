@@ -13,7 +13,7 @@ const getAll = async (req: Request, res: Response) => {
 
 const getById = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const id = Number(req.params.id);
     const product = await productService.getById(id);
     res.json(product);
   } catch (error: any) {
@@ -40,7 +40,7 @@ const create = async (req: Request, res: Response) => {
 
 const update = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const id = Number(req.params.id);
     const { name, price } = req.body;
     const updatedProduct = await productService.update(id, name, price);
     res.json(updatedProduct);
@@ -51,7 +51,7 @@ const update = async (req: Request, res: Response) => {
 
 const remove = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const id = Number(req.params.id);
     await productService.remove(id);
     res.json({ message: "Produto removido com sucesso" });
   } catch (error: any) {

@@ -5,6 +5,8 @@ import {
   authenticateToken,
   authorizeRole,
 } from "../middlewares/authMiddleware";
+import categoryController from "../controllers/categoryController";
+import orderController from "../controllers/orderController";
 
 const router = Router();
 
@@ -32,6 +34,37 @@ router.delete(
   authenticateToken,
   authorizeRole("ADMIN"),
   productController.remove
+);
+
+// categorias
+router.get("/categories", authenticateToken, categoryController.getAll);
+router.get("/categories/:id", authenticateToken, categoryController.getById);
+router.post(
+  "/categories",
+  authenticateToken,
+  authorizeRole("ADMIN"),
+  categoryController.create
+);
+router.put(
+  "/categories/:id",
+  authenticateToken,
+  authorizeRole("ADMIN"),
+  categoryController.update
+);
+router.delete(
+  "/categories/:id",
+  authenticateToken,
+  authorizeRole("ADMIN"),
+  categoryController.remove
+);
+
+router.post("/orders", authenticateToken, orderController.create);
+router.get("/orders/mine", authenticateToken, orderController.getMine);
+router.get(
+  "/orders/:id",
+  authenticateToken,
+  authorizeRole("ADMIN"),
+  orderController.getById
 );
 
 export default router;

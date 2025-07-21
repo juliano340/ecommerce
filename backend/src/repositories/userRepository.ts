@@ -6,6 +6,14 @@ const create = async (data: {
   password: string;
   role?: "ADMIN" | "USER";
 }) => {
+  const existingUser = await prisma.user.findUnique({
+    where: { email: data.email },
+  });
+
+  if (existingUser) {
+    throw new Error("Email already exists");
+  }
+
   return await prisma.user.create({
     data,
     select: {
